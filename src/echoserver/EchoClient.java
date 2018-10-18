@@ -3,6 +3,7 @@ package echoserver;
 import java.net.*;
 import java.io.*;
 
+
 public class EchoClient {
 
   public static final int portNumber = 6013;
@@ -21,15 +22,19 @@ public class EchoClient {
       Socket socket = new Socket(server, portNumber);
 
       // Get the input stream so we can read from that socket
-      InputStream input = socket.getInputStream();
-      OutputStream output = socket.getOutputStream();
+      InputStream keyboard_input = System.in;
+      OutputStream server_output = socket.getOutputStream();
+
+      InputStream server_input = socket.getInputStream();
+      OutputStream keyboard_output = System.out;
 
       int element;
       // Print all the input we receive from the server
-      while ((element = input.read()) != -1) {
-        output.write(element);
+      while ((element = keyboard_input.read()) != -1) {
+        server_output.write(element);
+        keyboard_output.write(server_input.read());
       }
-
+      keyboard_output.flush();
       // Close the socket when we're done reading from it
       socket.close();
 
