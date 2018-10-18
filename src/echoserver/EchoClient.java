@@ -21,20 +21,27 @@ public class EchoClient {
       // Connect to the server
       Socket socket = new Socket(server, portNumber);
 
-      // Get the input stream so we can read from that socket
+      // Input and output streams for the keyboard and
+      // sending the input to the server
       InputStream keyboard_input = System.in;
       OutputStream server_output = socket.getOutputStream();
 
+      // Input and output streams for receiving data from the
+      // server and writing out to the console 
       InputStream server_input = socket.getInputStream();
       OutputStream keyboard_output = System.out;
 
+
       int element;
-      // Print all the input we receive from the server
+      // While there is keyboard input, send it to the server
+      // and write out to the console what the server sends back
       while ((element = keyboard_input.read()) != -1) {
         server_output.write(element);
         keyboard_output.write(server_input.read());
       }
+      // Make sure everything has been sent to System.out
       keyboard_output.flush();
+
       // Close the socket when we're done reading from it
       socket.close();
 
