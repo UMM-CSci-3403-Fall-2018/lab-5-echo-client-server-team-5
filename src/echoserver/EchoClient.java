@@ -24,9 +24,10 @@ public class EchoClient {
       InputStream input = socket.getInputStream();
       OutputStream output = socket.getOutputStream();
 
+      int element;
       // Print all the input we receive from the server
-      while (input.read() != -1) {
-        output.write(input.read());
+      while ((element = input.read()) != -1) {
+        output.write(element);
       }
 
       // Close the socket when we're done reading from it

@@ -15,9 +15,15 @@ public class EchoServer {
       Socket client = sock.accept();
       System.out.println("Got a request!");
 
-      PrintWriter writer = new PrintWriter(client.getOutputStream(), true);
+      //PrintWriter writer = new PrintWriter(client.getOutputStream(), true);
+      InputStream input = client.getInputStream();
+      OutputStream output = client.getOutputStream();
 
-      writer.println();
+
+      int element;
+      while((element = input.read()) != -1) {
+        output.write(element);
+      }
 
       // Close the client socket since we're done.
       client.close();
